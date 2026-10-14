@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -15,6 +16,13 @@ const JWT_SECRET = process.env.JWT_SECRET || 'portal-super-secret-key-change-in-
 app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname));
+if (fs.existsSync(path.join(__dirname, 'connect-portal', 'public'))) {
+    app.use(express.static(path.join(__dirname, 'connect-portal', 'public')));
+}
+if (fs.existsSync(path.join(__dirname, 'connect-portal'))) {
+    app.use(express.static(path.join(__dirname, 'connect-portal')));
+}
 
 // In-Memory Fallback Store (Used if DATABASE_URL is not yet configured)
 const memoryStore = {
@@ -800,7 +808,40 @@ app.get('/api/game/leaderboard', async (req, res) => {
 
 // SPA Fallback for any other route
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    const candidates = [
+        path.join(__dirname, 'public', 'index.html'),
+        path.join(__dirname, 'index.html'),
+        path.join(__dirname, 'emman.html'),
+        path.join(__dirname, 'public', 'emman.html'),
+        path.join(__dirname, 'connect-portal', 'public', 'index.html'),
+        path.join(__dirname, 'connect-portal', 'index.html'),
+        path.join(__dirname, 'connect-portal', 'emman.html')
+    ];
+
+    for (const filePath of candidates) {
+        if (fs.existsSync(filePath)) {
+            return res.sendFile(filePath);
+        }
+    }
+
+    res.status(404).send(`
+        <!DOCTYPE html>
+        <html>
+        <head><title>Connect Portal - Setup Notice</title><meta charset="utf-8"></head>
+        <body style="font-family: Arial, sans-serif; text-align: center; padding: 40px; background: #f0f2f5;">
+            <div style="max-width: 500px; margin: 0 auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <h2 style="color: #1877f2;">Connect Portal</h2>
+                <p>Naka-deploy na ang iyong server sa Render! 🚀</p>
+                <p style="color: #65676b;">Ngunit hindi pa nakikita ang <code>index.html</code> sa tamang folder ng iyong GitHub repository.</p>
+                <div style="text-align: left; background: #f8f9fa; padding: 12px; border-radius: 6px; font-size: 13px;">
+                    <strong>Mga file na natagpuan sa server:</strong><br>
+                    ${JSON.stringify(fs.readdirSync(__dirname))}
+                </div>
+                <p style="margin-top: 15px; font-size: 13px;">Pakisiguradong mai-upload ang <code>index.html</code> (o ang folder na <code>public</code>) sa iyong GitHub repository.</p>
+            </div>
+        </body>
+        </html>
+    `);
 });
 
 // Start Server
