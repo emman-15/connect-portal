@@ -1,0 +1,2181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Connect Portal | Social Community & Arcade Zone</title>
+
+    <!-- SEO Meta Tags for Google Search -->
+    <meta name="description" content="Connect Portal - Ang opisyal na Social Community at Arcade Zone na may libreng mini-games, live feed, at user profile.">
+    <meta name="keywords" content="Connect Portal, Emman Portal, Social Portal, Arcade Games, Lucky Wheel, Dice Duel, Coin Flip">
+    <meta name="author" content="Emman Connect">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph for Facebook, Messenger, Google Snippets -->
+    <meta property="og:title" content="Connect Portal | Social Community & Arcade Zone">
+    <meta property="og:description" content="Kumonekta sa mga kaibigan at maglaro ng mga libreng Arcade Mini-Games sa Connect Portal!">
+    <meta property="og:type" content="website">
+
+    <style>
+        :root {
+            --primary: #1877f2;
+            --primary-hover: #166fe5;
+            --success: #42b72a;
+            --success-hover: #36a420;
+            --gold: #f59e0b;
+            --gold-hover: #d97706;
+            --purple: #8b5cf6;
+            --danger: #e41e3f;
+            --bg: #f0f2f5;
+            --card-bg: #ffffff;
+            --text-main: #050505;
+            --text-secondary: #65676b;
+            --border: #ccd0d5;
+            --border-light: #e4e6eb;
+            --shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Top Cloud Status Banner */
+        .cloud-banner {
+            background: #111b27;
+            color: #ecf2f8;
+            padding: 6px 14px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .cloud-badge-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cloud-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.12);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #31a24c;
+            display: inline-block;
+        }
+
+        /* ================= AUTH VIEW ================= */
+        .auth-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 16px;
+        }
+
+        .auth-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 60px;
+            max-width: 1020px;
+            width: 100%;
+        }
+
+        .intro {
+            max-width: 460px;
+        }
+
+        .intro h1 {
+            color: var(--primary);
+            font-size: 56px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+        }
+
+        .intro p {
+            font-size: 22px;
+            line-height: 1.4;
+            color: #1c1e21;
+            margin-bottom: 20px;
+        }
+
+        .tech-stack-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .stack-pill {
+            background: #e7f3ff;
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 24px;
+            width: 400px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-light);
+        }
+
+        .card h2 {
+            text-align: center;
+            margin-bottom: 18px;
+            color: var(--text-main);
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 15px;
+            color: var(--text-main);
+            background: #ffffff;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.2);
+        }
+
+        .login-btn, .register-btn, .demo-btn, .post-btn, .logout-btn {
+            width: 100%;
+            border: none;
+            padding: 13px;
+            border-radius: 6px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.05s;
+        }
+
+        .login-btn:active, .register-btn:active, .demo-btn:active, .post-btn:active, .logout-btn:active {
+            transform: scale(0.99);
+        }
+
+        .login-btn { background: var(--primary); margin-bottom: 10px; }
+        .login-btn:hover { background: var(--primary-hover); }
+
+        .register-btn { background: var(--success); margin-top: 10px; margin-bottom: 12px; }
+        .register-btn:hover { background: var(--success-hover); }
+
+        .demo-btn { background: #4b4f56; margin-bottom: 12px; font-size: 14px; padding: 10px; }
+        .demo-btn:hover { background: #33363b; }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 14px 0;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .divider:not(:empty)::before { margin-right: 10px; }
+        .divider:not(:empty)::after { margin-left: 10px; }
+
+        .switch {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .switch a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin-left: 4px;
+        }
+        .switch a:hover { text-decoration: underline; }
+
+        .alert-box {
+            padding: 10px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 14px;
+            display: none;
+            line-height: 1.4;
+        }
+        .alert-error { background: #ffebe8; color: #d93025; border: 1px solid #f5c2c7; }
+        .alert-success { background: #e6f4ea; color: #137333; border: 1px solid #b7e1cd; }
+
+        .notice {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 14px;
+            line-height: 1.4;
+        }
+
+        .hidden { display: none !important; }
+
+        /* ================= PORTAL MAIN VIEW ================= */
+        .portal-header {
+            background: #ffffff;
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 8px 16px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        }
+
+        .portal-nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-brand span.logo-tag {
+            font-size: 12px;
+            font-weight: 600;
+            background: #e7f3ff;
+            color: var(--primary);
+            padding: 3px 8px;
+            border-radius: 12px;
+        }
+
+        .nav-user-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Wallet Coin Badge */
+        .wallet-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            color: #92400e;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .claim-free-btn {
+            background: var(--gold);
+            color: #ffffff;
+            border: none;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .claim-free-btn:hover { background: var(--gold-hover); }
+
+        .user-chip {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f0f2f5;
+            padding: 5px 12px 5px 6px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+        }
+
+        .logout-btn {
+            background: #e4e6eb;
+            color: var(--text-main);
+            padding: 8px 12px;
+            font-size: 13px;
+            width: auto;
+            border-radius: 6px;
+        }
+        .logout-btn:hover { background: #d8dadf; }
+
+        /* Portal Body Grid */
+        .portal-layout {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: 280px 1fr 300px;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .portal-card {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-light);
+            margin-bottom: 16px;
+        }
+
+        /* Sidebar Profile */
+        .profile-card-header {
+            text-align: center;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .profile-avatar-lg {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            font-weight: 700;
+            margin: 0 auto 10px;
+            box-shadow: 0 4px 10px rgba(24, 119, 242, 0.3);
+        }
+
+        .profile-name { font-size: 17px; font-weight: 700; color: var(--text-main); }
+        .profile-email { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+        .profile-meta {
+            padding: 12px 0 0;
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .profile-meta-row { display: flex; justify-content: space-between; }
+        .profile-meta-row strong { color: var(--text-main); }
+
+        /* Sidebar Navigation */
+        .sidebar-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .sidebar-links li a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            border-radius: 8px;
+            transition: background 0.15s;
+            cursor: pointer;
+        }
+
+        .sidebar-links li a:hover, .sidebar-links li a.active {
+            background: #e7f3ff;
+            color: var(--primary);
+        }
+
+        .badge-hot {
+            background: #ff4757;
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Create Post */
+        .create-post-card {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-light);
+            margin-bottom: 20px;
+        }
+
+        .create-post-top { display: flex; gap: 12px; margin-bottom: 12px; }
+        .create-post-top textarea {
+            resize: none;
+            height: 70px;
+            border-radius: 8px;
+            background: #f0f2f5;
+            border: 1px solid transparent;
+            font-size: 15px;
+            padding: 10px 12px;
+        }
+        .create-post-top textarea:focus { background: #ffffff; border-color: var(--primary); }
+
+        .create-post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 10px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .post-mood-select {
+            padding: 6px 10px;
+            font-size: 13px;
+            border-radius: 6px;
+            width: auto;
+            background: #f0f2f5;
+            border: none;
+        }
+        .post-btn { background: var(--primary); padding: 8px 24px; font-size: 14px; width: auto; }
+
+        /* Feed Post Item */
+        .feed-post {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-light);
+            margin-bottom: 18px;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        .post-author-box { display: flex; align-items: center; gap: 10px; }
+        .post-author-name { font-weight: 700; font-size: 15px; color: var(--text-main); }
+        .post-time { font-size: 12px; color: var(--text-secondary); }
+        .post-delete-btn {
+            background: none; border: none; color: var(--text-secondary);
+            cursor: pointer; font-size: 16px; padding: 4px 8px; border-radius: 4px;
+        }
+        .post-delete-btn:hover { color: var(--danger); background: #ffebe8; }
+
+        .post-content {
+            font-size: 15px;
+            line-height: 1.45;
+            color: #1c1e21;
+            margin-bottom: 14px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .post-stats {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid var(--border-light);
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .action-button {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: #ffffff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-secondary);
+            transition: background 0.15s, color 0.15s;
+        }
+        .action-button:hover { background: #f0f2f5; }
+        .action-button.liked { color: var(--primary); font-weight: bold; }
+
+        /* Comments */
+        .comments-section { padding-top: 10px; }
+        .comment-input-box { display: flex; gap: 8px; margin-top: 10px; }
+        .comment-input-box input {
+            padding: 8px 12px; font-size: 13px; border-radius: 18px;
+            background: #f0f2f5; border: 1px solid transparent;
+        }
+        .comment-input-box input:focus { background: #ffffff; border-color: var(--primary); }
+        .comment-send-btn {
+            background: var(--primary); color: white; border: none;
+            border-radius: 18px; padding: 0 14px; font-size: 13px; font-weight: 600; cursor: pointer;
+        }
+        .comment-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+        .comment-bubble { background: #f0f2f5; padding: 8px 12px; border-radius: 12px; font-size: 13px; max-width: 85%; }
+        .comment-author { font-weight: bold; color: var(--text-main); margin-bottom: 2px; }
+
+        /* ================= ARCADE & MINI-GAMES ZONE ================= */
+        .arcade-notice-card {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #ffffff;
+            border-radius: var(--radius);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .arcade-notice-card h3 {
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            color: #fbbf24;
+        }
+
+        .arcade-notice-card p {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #cbd5e1;
+        }
+
+        .game-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .game-tab-btn {
+            background: #ffffff;
+            border: 1px solid var(--border-light);
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .game-tab-btn:hover { background: #f0f2f5; }
+        .game-tab-btn.active {
+            background: var(--primary);
+            color: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 4px 10px rgba(24, 119, 242, 0.25);
+        }
+
+        .game-card {
+            background: #ffffff;
+            border-radius: var(--radius);
+            padding: 24px;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .game-title {
+            font-size: 20px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .game-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        /* Game 1: Wheel */
+        .wheel-container {
+            position: relative;
+            width: 260px;
+            height: 260px;
+            margin: 0 auto 20px;
+        }
+
+        .wheel-canvas {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            transition: transform 4s cubic-bezier(0.15, 0.9, 0.2, 1);
+        }
+
+        .wheel-pointer {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 14px solid transparent;
+            border-right: 14px solid transparent;
+            border-top: 26px solid #e11d48;
+            z-index: 10;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .wheel-center-cap {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 44px;
+            height: 44px;
+            background: #ffffff;
+            border: 4px solid #1e293b;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        /* Game 2: Dice */
+        .dice-arena {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            margin: 24px 0;
+        }
+
+        .die-box {
+            width: 76px;
+            height: 76px;
+            background: linear-gradient(145deg, #ffffff, #e2e8f0);
+            border: 2px solid #cbd5e1;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+            user-select: none;
+            transition: transform 0.2s;
+        }
+        .die-box.rolling { animation: shakeDice 0.5s infinite; }
+
+        @keyframes shakeDice {
+            0% { transform: rotate(0deg) scale(1.05); }
+            25% { transform: rotate(-10deg) scale(0.95); }
+            50% { transform: rotate(10deg) scale(1.1); }
+            75% { transform: rotate(-8deg) scale(0.98); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+
+        .dice-prediction-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .pred-btn {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            padding: 12px 8px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .pred-btn:hover { border-color: var(--primary); }
+        .pred-btn.active {
+            border-color: var(--primary);
+            background: #eff6ff;
+            box-shadow: 0 2px 8px rgba(24, 119, 242, 0.2);
+        }
+        .pred-title { font-weight: 800; font-size: 14px; margin-bottom: 2px; }
+        .pred-sub { font-size: 11px; color: var(--text-secondary); }
+
+        /* Game 3: Coin Flip */
+        .coin-box {
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+            border-radius: 50%;
+            background: radial-gradient(circle, #fde047 30%, #eab308 90%);
+            border: 4px solid #ca8a04;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            box-shadow: 0 8px 18px rgba(202, 138, 4, 0.35);
+            transition: transform 1s ease-out;
+            user-select: none;
+        }
+        .coin-box.flipping {
+            animation: flipAnimation 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes flipAnimation {
+            0% { transform: rotateY(0deg) scale(1); }
+            50% { transform: rotateY(900deg) scale(1.25); }
+            100% { transform: rotateY(1800deg) scale(1); }
+        }
+
+        .coin-choice-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        /* Betting Controls */
+        .bet-control-panel {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 14px;
+            margin-bottom: 20px;
+        }
+
+        .bet-control-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .bet-quick-btns {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .bet-chip {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .bet-chip:hover { border-color: var(--gold); }
+        .bet-chip.active {
+            background: var(--gold);
+            color: #ffffff;
+            border-color: var(--gold);
+        }
+
+        .game-action-btn {
+            background: linear-gradient(135deg, #1877f2, #1d4ed8);
+            color: #ffffff;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(24, 119, 242, 0.35);
+            transition: transform 0.1s, box-shadow 0.15s;
+            width: 100%;
+            max-width: 280px;
+        }
+        .game-action-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(24, 119, 242, 0.45); }
+        .game-action-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        /* Game Result Box */
+        .game-result-banner {
+            margin-top: 18px;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+        .result-win { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+        .result-lose { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+
+        .share-win-btn {
+            margin-top: 8px;
+            background: #ffffff;
+            border: 1px solid #15803d;
+            color: #15803d;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Leaderboard */
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            text-align: left;
+        }
+        .leaderboard-table th {
+            padding: 10px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            border-bottom: 2px solid var(--border-light);
+            text-transform: uppercase;
+        }
+        .leaderboard-table td {
+            padding: 12px 10px;
+            font-size: 14px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .rank-medal { font-size: 18px; }
+
+        /* Responsive */
+        @media (max-width: 980px) {
+            .portal-layout { grid-template-columns: 240px 1fr; }
+            .right-sidebar { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .auth-container { flex-direction: column; gap: 25px; }
+            .intro { text-align: center; }
+            .intro h1 { font-size: 42px; }
+            .intro p { font-size: 18px; }
+            .card { width: 100%; max-width: 400px; }
+            .portal-layout { grid-template-columns: 1fr; padding: 0 12px; }
+            .left-sidebar { order: 2; }
+            .portal-main-col { order: 1; }
+            .wallet-pill span:not(#navCoinsAmount) { display: none; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Cloud Status Header -->
+    <div class="cloud-banner">
+        <div class="cloud-badge-group">
+            <span class="cloud-pill">⚡ Render Web Service</span>
+            <span class="cloud-pill">🐙 GitHub Continuous Deploy</span>
+            <span class="cloud-pill">🐘 Neon PostgreSQL</span>
+        </div>
+        <div id="dbStatusBadge" class="cloud-pill">
+            <span class="status-dot"></span>
+            <span id="dbStatusText">Checking Cloud Status...</span>
+        </div>
+    </div>
+
+    <!-- ================= AUTH VIEW ================= -->
+    <div id="authView" class="auth-wrapper">
+        <div class="auth-container">
+
+            <div class="intro">
+                <h1>Connect</h1>
+                <p>Ang iyong online portal na may Social Feed, Neon PostgreSQL, at Virtual Arcade Zone!</p>
+                <div class="tech-stack-pills">
+                    <span class="stack-pill">🚀 Render Hosted</span>
+                    <span class="stack-pill">🐘 Neon Postgres</span>
+                    <span class="stack-pill">🎮 Virtual Arcade</span>
+                    <span class="stack-pill">📱 Safari & Chrome Ready</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <div id="authAlert" class="alert-box"></div>
+
+                <!-- LOGIN FORM -->
+                <form id="loginForm">
+                    <h2>Log In</h2>
+
+                    <div class="form-group">
+                        <label for="loginEmail">Email Address</label>
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            placeholder="Email address"
+                            autocomplete="username"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            placeholder="Password"
+                            autocomplete="current-password"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit" class="login-btn" id="loginBtn">
+                        Log In to Portal
+                    </button>
+
+                    <button type="button" id="quickDemoBtn" class="demo-btn">
+                        ⚡ Quick Demo Login (Emman)
+                    </button>
+
+                    <div class="divider">or</div>
+
+                    <div class="switch">
+                        Don't have an account?
+                        <a id="showRegister">Create Account</a>
+                    </div>
+                </form>
+
+                <!-- REGISTER FORM -->
+                <form id="registerForm" class="hidden">
+                    <h2>Create Account</h2>
+
+                    <div class="form-group">
+                        <label for="regFirstName">First Name</label>
+                        <input
+                            type="text"
+                            id="regFirstName"
+                            placeholder="First name"
+                            autocomplete="given-name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regLastName">Last Name</label>
+                        <input
+                            type="text"
+                            id="regLastName"
+                            placeholder="Last name"
+                            autocomplete="family-name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regEmail">Email Address</label>
+                        <input
+                            type="email"
+                            id="regEmail"
+                            placeholder="Email address"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="regPassword">Password</label>
+                        <input
+                            type="password"
+                            id="regPassword"
+                            placeholder="Create password (min 6 characters)"
+                            autocomplete="new-password"
+                            minlength="6"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="birthday">Birthday</label>
+                        <input type="date" id="birthday" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" required>
+                            <option value="">Select gender</option>
+                            <option value="Female">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Other">Other</option>
+                            <option value="Prefer not to say">Prefer not to say</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="register-btn" id="registerBtn">
+                        Sign Up & Enter Portal (+1,000 Free Coins)
+                    </button>
+
+                    <div class="switch">
+                        Already have an account?
+                        <a id="showLogin">Log In</a>
+                    </div>
+                </form>
+
+                <p class="notice">
+                    🔒 Data is safely stored in Neon PostgreSQL. Bawat bagong account ay may libreng 1,000 Virtual Coins!
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= PORTAL VIEW ================= -->
+    <div id="portalView" class="hidden">
+        <!-- Top Navigation -->
+        <header class="portal-header">
+            <div class="portal-nav">
+                <a class="nav-brand" id="brandHomeLink">
+                    Connect <span class="logo-tag">Portal</span>
+                </a>
+
+                <div class="nav-user-actions">
+                    <!-- Virtual Coins Wallet -->
+                    <div class="wallet-pill" title="Virtual Play Coins Balance">
+                        <span>🪙</span>
+                        <span id="navCoinsAmount">1,000</span>
+                        <button class="claim-free-btn" id="claimRefillBtn" title="Claim 250 Free Virtual Coins">+ Free</button>
+                    </div>
+
+                    <div class="user-chip">
+                        <div class="avatar" id="navAvatar">U</div>
+                        <span id="navUserName">User</span>
+                    </div>
+
+                    <button class="logout-btn" id="logoutBtn" title="Log Out">
+                        🚪 Log Out
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Portal Container -->
+        <div class="portal-layout">
+
+            <!-- Left Column: User Profile Card & Navigation -->
+            <aside class="left-sidebar">
+                <div class="portal-card">
+                    <div class="profile-card-header">
+                        <div class="profile-avatar-lg" id="profileAvatar">U</div>
+                        <div class="profile-name" id="profileFullName">User Name</div>
+                        <div class="profile-email" id="profileEmail">user@example.com</div>
+                    </div>
+                    <div class="profile-meta">
+                        <div class="profile-meta-row">
+                            <span>Virtual Wallet:</span>
+                            <strong style="color: #b45309;">🪙 <span id="profileCoinsText">1,000</span></strong>
+                        </div>
+                        <div class="profile-meta-row">
+                            <span>Status:</span>
+                            <strong style="color: #31a24c;">● Online in Portal</strong>
+                        </div>
+                        <div class="profile-meta-row">
+                            <span>Database:</span>
+                            <strong id="dbStatusSidebar">Neon Postgres</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portal-card">
+                    <ul class="sidebar-links">
+                        <li>
+                            <a id="navFeedTab" class="active">
+                                <span>🏠 Newsfeed</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a id="navArcadeTab">
+                                <span>🎮 Arcade & Games</span>
+                                <span class="badge-hot">HOT</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a id="navLeaderboardTab">
+                                <span>🏆 Hall of Fame</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Center Column: Switchable Views -->
+            <main class="portal-main-col">
+
+                <!-- 1. NEWSFEED VIEW -->
+                <div id="sectionFeed">
+                    <!-- Create Post Card -->
+                    <div class="create-post-card">
+                        <div class="create-post-top">
+                            <div class="avatar" id="postBoxAvatar">U</div>
+                            <textarea
+                                id="postContentInput"
+                                placeholder="What's on your mind? Share an update or your game score..."
+                            ></textarea>
+                        </div>
+                        <div class="create-post-actions">
+                            <select id="postMoodSelect" class="post-mood-select">
+                                <option value="😊 Feeling Good">😊 Feeling Good</option>
+                                <option value="🎰 Playing Arcade">🎰 Playing Arcade</option>
+                                <option value="🏆 Winner">🏆 Winner</option>
+                                <option value="🚀 Excited">🚀 Excited</option>
+                                <option value="💡 Sharing Idea">💡 Sharing Idea</option>
+                            </select>
+                            <button type="button" id="submitPostBtn" class="post-btn">
+                                Publish Post
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Posts Container -->
+                    <div id="postsFeedContainer">
+                        <div class="portal-card" style="text-align:center; padding: 25px; color: var(--text-secondary);">
+                            Loading feed...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. ARCADE & MINI-GAMES VIEW -->
+                <div id="sectionArcade" class="hidden">
+                    <!-- Safe Notice Banner -->
+                    <div class="arcade-notice-card">
+                        <h3>⚠️ Safe Play-Money Arcade Zone</h3>
+                        <p>
+                            Ang mga larong ito ay para lamang sa <strong>libangan (fun & games)</strong> gamit ang libreng <strong>Virtual Play Coins</strong>. Walang kinalaman sa totoong pera, walang pustahan, at walang cash-out. Libre ang coins at pwedeng mag-refill kahit kailan!
+                        </p>
+                    </div>
+
+                    <!-- Game Sub-Tabs -->
+                    <div class="game-tabs">
+                        <button class="game-tab-btn active" id="tabBtnWheel">🎡 Lucky Spin Wheel</button>
+                        <button class="game-tab-btn" id="tabBtnDice">🎲 Double Dice Duel</button>
+                        <button class="game-tab-btn" id="tabBtnCoin">🪙 Flip the Coin</button>
+                    </div>
+
+                    <!-- GAME 1: LUCKY SPIN WHEEL -->
+                    <div id="gameBoxWheel" class="game-card">
+                        <div class="game-title">🎡 Lucky Spin Wheel</div>
+                        <div class="game-desc">Paikutin ang rolyo para manalo ng hanggang 1,000 Free Virtual Coins! (Cost: 50 coins kada spin)</div>
+
+                        <div class="wheel-container">
+                            <div class="wheel-pointer"></div>
+                            <canvas id="wheelCanvas" class="wheel-canvas" width="260" height="260"></canvas>
+                            <div class="wheel-center-cap">⭐</div>
+                        </div>
+
+                        <div>
+                            <button class="game-action-btn" id="spinWheelBtn">
+                                🌀 Spin Wheel (50 Coins)
+                            </button>
+                        </div>
+
+                        <div id="wheelResultBanner" class="game-result-banner"></div>
+                    </div>
+
+                    <!-- GAME 2: DOUBLE DICE DUEL -->
+                    <div id="gameBoxDice" class="game-card hidden">
+                        <div class="game-title">🎲 Double Dice Duel</div>
+                        <div class="game-desc">Hulaan kung ang suma ng dalawang dice ay LOW (2-6), LUCKY 7 (7), o HIGH (8-12)!</div>
+
+                        <div class="dice-arena">
+                            <div class="die-box" id="dieBox1">⚄</div>
+                            <div class="die-box" id="dieBox2">⚂</div>
+                        </div>
+
+                        <!-- Prediction Selector -->
+                        <div class="dice-prediction-grid">
+                            <div class="pred-btn active" id="predLow" onclick="selectDicePrediction('low')">
+                                <div class="pred-title">🟢 LOW (2 - 6)</div>
+                                <div class="pred-sub">Pays 2x</div>
+                            </div>
+                            <div class="pred-btn" id="predLucky7" onclick="selectDicePrediction('lucky7')">
+                                <div class="pred-title">⭐ LUCKY 7 (7)</div>
+                                <div class="pred-sub" style="color: var(--gold); font-weight: bold;">Pays 4x!</div>
+                            </div>
+                            <div class="pred-btn" id="predHigh" onclick="selectDicePrediction('high')">
+                                <div class="pred-title">🔵 HIGH (8 - 12)</div>
+                                <div class="pred-sub">Pays 2x</div>
+                            </div>
+                        </div>
+
+                        <!-- Bet Controls -->
+                        <div class="bet-control-panel">
+                            <div class="bet-control-title">Pumili ng Virtual Coins na Ilalagay:</div>
+                            <div class="bet-quick-btns">
+                                <button class="bet-chip active" onclick="setDiceBet(10)">10</button>
+                                <button class="bet-chip" onclick="setDiceBet(25)">25</button>
+                                <button class="bet-chip" onclick="setDiceBet(50)">50</button>
+                                <button class="bet-chip" onclick="setDiceBet(100)">100</button>
+                            </div>
+                        </div>
+
+                        <button class="game-action-btn" id="rollDiceBtn">
+                            🎲 Roll the Dice!
+                        </button>
+
+                        <div id="diceResultBanner" class="game-result-banner"></div>
+                    </div>
+
+                    <!-- GAME 3: FLIP THE COIN -->
+                    <div id="gameBoxCoin" class="game-card hidden">
+                        <div class="game-title">🪙 Flip the Coin</div>
+                        <div class="game-desc">Pumili sa Heads o Tails. Kapag tumama ang iyong hula, dodoblehin ang iyong virtual coins (2x payout)!</div>
+
+                        <div class="coin-box" id="coinVisual">👑</div>
+
+                        <div class="coin-choice-grid">
+                            <div class="pred-btn active" id="choiceHeads" onclick="selectCoinChoice('heads')">
+                                <div class="pred-title">👑 HEADS</div>
+                                <div class="pred-sub">Pays 2x</div>
+                            </div>
+                            <div class="pred-btn" id="choiceTails" onclick="selectCoinChoice('tails')">
+                                <div class="pred-title">🦅 TAILS</div>
+                                <div class="pred-sub">Pays 2x</div>
+                            </div>
+                        </div>
+
+                        <!-- Bet Controls -->
+                        <div class="bet-control-panel">
+                            <div class="bet-control-title">Pumili ng Virtual Coins na Ilalagay:</div>
+                            <div class="bet-quick-btns">
+                                <button class="bet-chip active" onclick="setCoinBet(10)">10</button>
+                                <button class="bet-chip" onclick="setCoinBet(25)">25</button>
+                                <button class="bet-chip" onclick="setCoinBet(50)">50</button>
+                                <button class="bet-chip" onclick="setCoinBet(100)">100</button>
+                            </div>
+                        </div>
+
+                        <button class="game-action-btn" id="flipCoinBtn">
+                            🪙 Flip Coin!
+                        </button>
+
+                        <div id="coinResultBanner" class="game-result-banner"></div>
+                    </div>
+
+                </div>
+
+                <!-- 3. LEADERBOARD VIEW -->
+                <div id="sectionLeaderboard" class="hidden">
+                    <div class="game-card">
+                        <div class="game-title">🏆 Virtual Coins Hall of Fame</div>
+                        <div class="game-desc">Top Players na may pinakamalaking virtual coins sa Connect Portal.</div>
+
+                        <table class="leaderboard-table">
+                            <thead>
+                                <tr>
+                                    <th>Rank</th>
+                                    <th>Member</th>
+                                    <th>Virtual Coins</th>
+                                </tr>
+                            </thead>
+                            <tbody id="leaderboardBody">
+                                <tr><td colspan="3" style="text-align:center;">Loading ranking...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </main>
+
+            <!-- Right Column: Portal Info & Online Members -->
+            <aside class="right-sidebar">
+                <div class="portal-card">
+                    <h3 style="font-size: 15px; margin-bottom: 10px; color: var(--text-main);">
+                        🎮 Arcade Mini-Games
+                    </h3>
+                    <div style="font-size: 13px; color: var(--text-secondary); line-height: 1.5;">
+                        Libreng libangan kasama ang mga kaibigan. Subukan ang <strong>Lucky Spin Wheel</strong> o <strong>Double Dice</strong> gamit ang iyong virtual coins!
+                    </div>
+                </div>
+
+                <div class="portal-card">
+                    <h3 style="font-size: 15px; margin-bottom: 12px; color: var(--text-main);">
+                        👥 Online Members
+                    </h3>
+                    <ul class="member-list" style="list-style:none; display:flex; flex-direction:column; gap:10px;">
+                        <li style="display:flex; align-items:center; gap:8px; font-size:14px;">
+                            <span class="status-dot"></span>
+                            <span id="onlineSelfName">Emman (You)</span>
+                        </li>
+                        <li style="display:flex; align-items:center; gap:8px; font-size:14px;">
+                            <span class="status-dot"></span>
+                            <span>Sarah Dela Cruz</span>
+                        </li>
+                        <li style="display:flex; align-items:center; gap:8px; font-size:14px;">
+                            <span class="status-dot"></span>
+                            <span>Mark Anthony</span>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+
+        </div>
+    </div>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        const TOKEN_KEY = "portal_jwt_token";
+        let currentUser = null;
+        let allPosts = [];
+
+        // UI Views
+        const authView = document.getElementById("authView");
+        const portalView = document.getElementById("portalView");
+        const sectionFeed = document.getElementById("sectionFeed");
+        const sectionArcade = document.getElementById("sectionArcade");
+        const sectionLeaderboard = document.getElementById("sectionLeaderboard");
+
+        // Auth
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+        const showRegisterBtn = document.getElementById("showRegister");
+        const showLoginBtn = document.getElementById("showLogin");
+        const authAlert = document.getElementById("authAlert");
+        const quickDemoBtn = document.getElementById("quickDemoBtn");
+        const logoutBtn = document.getElementById("logoutBtn");
+
+        // Status & User Profile
+        const dbStatusText = document.getElementById("dbStatusText");
+        const navAvatar = document.getElementById("navAvatar");
+        const navUserName = document.getElementById("navUserName");
+        const navCoinsAmount = document.getElementById("navCoinsAmount");
+        const profileAvatar = document.getElementById("profileAvatar");
+        const profileFullName = document.getElementById("profileFullName");
+        const profileEmail = document.getElementById("profileEmail");
+        const profileCoinsText = document.getElementById("profileCoinsText");
+        const onlineSelfName = document.getElementById("onlineSelfName");
+        const claimRefillBtn = document.getElementById("claimRefillBtn");
+
+        // Nav Links
+        const navFeedTab = document.getElementById("navFeedTab");
+        const navArcadeTab = document.getElementById("navArcadeTab");
+        const navLeaderboardTab = document.getElementById("navLeaderboardTab");
+        const brandHomeLink = document.getElementById("brandHomeLink");
+
+        // Feed Elements
+        const postContentInput = document.getElementById("postContentInput");
+        const postMoodSelect = document.getElementById("postMoodSelect");
+        const submitPostBtn = document.getElementById("submitPostBtn");
+        const postsFeedContainer = document.getElementById("postsFeedContainer");
+
+        // Game State Variables
+        let currentDiceBet = 10;
+        let currentDicePrediction = 'low';
+        let currentCoinBet = 10;
+        let currentCoinChoice = 'heads';
+        let isWheelSpinning = false;
+        let wheelRotation = 0;
+
+        // Alerts Helper
+        function showAlert(msg, isError = true) {
+            authAlert.textContent = msg;
+            authAlert.className = `alert-box ${isError ? 'alert-error' : 'alert-success'}`;
+            authAlert.style.display = "block";
+            setTimeout(() => { authAlert.style.display = "none"; }, 6000);
+        }
+
+        function getAuthHeaders() {
+            const token = localStorage.getItem(TOKEN_KEY);
+            return token ? { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" } : { "Content-Type": "application/json" };
+        }
+
+        // Toggle Auth forms
+        showRegisterBtn.onclick = () => {
+            authAlert.style.display = "none";
+            loginForm.classList.add("hidden");
+            registerForm.classList.remove("hidden");
+        };
+
+        showLoginBtn.onclick = () => {
+            authAlert.style.display = "none";
+            registerForm.classList.add("hidden");
+            loginForm.classList.remove("hidden");
+        };
+
+        // Navigation Switching
+        function switchView(tab) {
+            navFeedTab.classList.remove("active");
+            navArcadeTab.classList.remove("active");
+            navLeaderboardTab.classList.remove("active");
+
+            sectionFeed.classList.add("hidden");
+            sectionArcade.classList.add("hidden");
+            sectionLeaderboard.classList.add("hidden");
+
+            if (tab === "arcade") {
+                navArcadeTab.classList.add("active");
+                sectionArcade.classList.remove("hidden");
+                drawWheel();
+            } else if (tab === "leaderboard") {
+                navLeaderboardTab.classList.add("active");
+                sectionLeaderboard.classList.remove("hidden");
+                loadLeaderboard();
+            } else {
+                navFeedTab.classList.add("active");
+                sectionFeed.classList.remove("hidden");
+                loadPosts();
+            }
+        }
+
+        navFeedTab.onclick = () => switchView("feed");
+        brandHomeLink.onclick = () => switchView("feed");
+        navArcadeTab.onclick = () => switchView("arcade");
+        navLeaderboardTab.onclick = () => switchView("leaderboard");
+
+        // Check Health / DB Status
+        async function checkStatus() {
+            try {
+                const res = await fetch("/api/status");
+                if (res.ok) {
+                    const data = await res.json();
+                    dbStatusText.textContent = data.database === "connected" ? "🟢 Neon PostgreSQL Connected" : "🟡 Running (Local Mode)";
+                }
+            } catch (err) {
+                dbStatusText.textContent = "Offline / Local Mode";
+            }
+        }
+
+        // Check active session
+        async function checkSession() {
+            const token = localStorage.getItem(TOKEN_KEY);
+            if (!token) {
+                showAuthView();
+                return;
+            }
+
+            try {
+                const res = await fetch("/api/auth/me", { headers: getAuthHeaders() });
+                if (res.ok) {
+                    const data = await res.json();
+                    enterPortal(data.user);
+                } else {
+                    localStorage.removeItem(TOKEN_KEY);
+                    showAuthView();
+                }
+            } catch (err) {
+                showAuthView();
+            }
+        }
+
+        function showAuthView() {
+            authView.classList.remove("hidden");
+            portalView.classList.add("hidden");
+            currentUser = null;
+        }
+
+        function updateWalletUI(coins) {
+            if (currentUser) currentUser.coins = coins;
+            navCoinsAmount.textContent = Number(coins || 0).toLocaleString();
+            profileCoinsText.textContent = Number(coins || 0).toLocaleString();
+        }
+
+        function enterPortal(user) {
+            currentUser = user;
+            const fullName = `${user.first_name || user.firstName} ${user.last_name || user.lastName}`;
+            const initials = (((user.first_name || user.firstName)[0] || '') + ((user.last_name || user.lastName)[0] || '')).toUpperCase();
+
+            navAvatar.textContent = initials;
+            navUserName.textContent = user.first_name || user.firstName;
+            document.getElementById("postBoxAvatar").textContent = initials;
+            profileAvatar.textContent = initials;
+            profileFullName.textContent = fullName;
+            profileEmail.textContent = user.email;
+            if (onlineSelfName) onlineSelfName.textContent = `${fullName} (You)`;
+
+            updateWalletUI(user.coins !== undefined ? user.coins : 1000);
+
+            authView.classList.add("hidden");
+            portalView.classList.remove("hidden");
+
+            switchView("feed");
+        }
+
+        // Quick Demo Login
+        quickDemoBtn.onclick = async () => {
+            try {
+                const res = await fetch("/api/auth/demo", { method: "POST" });
+                const data = await res.json();
+                if (res.ok) {
+                    localStorage.setItem(TOKEN_KEY, data.token);
+                    enterPortal(data.user);
+                } else {
+                    showAlert(data.error || "Demo login failed");
+                }
+            } catch (err) {
+                showAlert("Server error during demo login");
+            }
+        };
+
+        // Login
+        loginForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById("loginEmail").value.trim();
+            const password = document.getElementById("loginPassword").value;
+
+            try {
+                const res = await fetch("/api/auth/login", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await res.json();
+                if (res.ok) {
+                    localStorage.setItem(TOKEN_KEY, data.token);
+                    enterPortal(data.user);
+                    loginForm.reset();
+                } else {
+                    showAlert(data.error || "Login failed");
+                }
+            } catch (err) {
+                showAlert("Cannot connect to server.");
+            }
+        };
+
+        // Register
+        registerForm.onsubmit = async (e) => {
+            e.preventDefault();
+            const firstName = document.getElementById("regFirstName").value.trim();
+            const lastName = document.getElementById("regLastName").value.trim();
+            const email = document.getElementById("regEmail").value.trim();
+            const password = document.getElementById("regPassword").value;
+            const birthday = document.getElementById("birthday").value;
+            const gender = document.getElementById("gender").value;
+
+            try {
+                const res = await fetch("/api/auth/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ firstName, lastName, email, password, birthday, gender })
+                });
+
+                const data = await res.json();
+                if (res.ok) {
+                    localStorage.setItem(TOKEN_KEY, data.token);
+                    enterPortal(data.user);
+                    registerForm.reset();
+                } else {
+                    showAlert(data.error || "Registration failed");
+                }
+            } catch (err) {
+                showAlert("Cannot connect to server.");
+            }
+        };
+
+        // Logout
+        logoutBtn.onclick = () => {
+            localStorage.removeItem(TOKEN_KEY);
+            showAuthView();
+        };
+
+        // Claim Free Coins Refill
+        claimRefillBtn.onclick = async () => {
+            try {
+                const res = await fetch("/api/game/claim-refill", {
+                    method: "POST",
+                    headers: getAuthHeaders()
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    updateWalletUI(data.coins);
+                    alert(data.message);
+                } else {
+                    alert(data.error || "Failed to claim free coins");
+                }
+            } catch (err) {
+                // Offline fallback
+                const current = (currentUser.coins || 1000) + 250;
+                updateWalletUI(current);
+                alert("Nakatanggap ka ng +250 Free Virtual Coins!");
+            }
+        };
+
+        // Load Posts
+        async function loadPosts() {
+            try {
+                const res = await fetch("/api/posts", { headers: getAuthHeaders() });
+                if (res.ok) {
+                    const data = await res.json();
+                    allPosts = data.posts || [];
+                    renderFeed();
+                }
+            } catch (err) {
+                console.error("Failed to load posts", err);
+            }
+        }
+
+        // Create Post
+        submitPostBtn.onclick = async () => {
+            const content = postContentInput.value.trim();
+            if (!content) {
+                alert("Mangyaring maglagay ng mensahe bago mag-post.");
+                return;
+            }
+
+            const mood = postMoodSelect.value;
+            try {
+                const res = await fetch("/api/posts", {
+                    method: "POST",
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({ content, mood })
+                });
+
+                if (res.ok) {
+                    postContentInput.value = "";
+                    loadPosts();
+                } else {
+                    const data = await res.json();
+                    alert(data.error || "Failed to publish post.");
+                }
+            } catch (err) {
+                alert("Server error publishing post.");
+            }
+        };
+
+        function renderFeed() {
+            postsFeedContainer.innerHTML = "";
+            if (!allPosts || allPosts.length === 0) {
+                postsFeedContainer.innerHTML = `
+                    <div class="portal-card" style="text-align:center; padding: 30px; color: var(--text-secondary);">
+                        Walang nahanap na post sa database. Mag-share ng unang update!
+                    </div>
+                `;
+                return;
+            }
+
+            allPosts.forEach(post => {
+                const author = post.author_name || "User";
+                const initials = author.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase();
+                const isOwner = currentUser && (currentUser.email === post.author_email || currentUser.id === post.user_id);
+                const comments = Array.isArray(post.comments) ? post.comments : [];
+
+                const postEl = document.createElement("div");
+                postEl.className = "feed-post";
+                postEl.innerHTML = `
+                    <div class="post-header">
+                        <div class="post-author-box">
+                            <div class="avatar">${initials}</div>
+                            <div>
+                                <div class="post-author-name">
+                                    ${escapeHtml(author)}
+                                    <span style="font-size: 12px; font-weight: normal; color: var(--primary);">• ${escapeHtml(post.mood || '')}</span>
+                                </div>
+                                <div class="post-time">${formatDate(post.created_at)}</div>
+                            </div>
+                        </div>
+                        ${isOwner ? `<button class="post-delete-btn" onclick="deletePost(${post.id})" title="Delete Post">✕</button>` : ''}
+                    </div>
+
+                    <div class="post-content">${escapeHtml(post.content)}</div>
+
+                    <div class="post-stats">
+                        <span>👍 ${post.likes_count || 0} likes</span>
+                        <span>💬 ${comments.length} comments</span>
+                    </div>
+
+                    <div class="post-actions">
+                        <button class="action-button ${post.user_liked ? 'liked' : ''}" onclick="toggleLike(${post.id})">
+                            ${post.user_liked ? '❤️ Liked' : '👍 Like'}
+                        </button>
+                        <button class="action-button" onclick="focusCommentInput(${post.id})">
+                            💬 Comment
+                        </button>
+                    </div>
+
+                    <div class="comments-section">
+                        <div class="comment-list" id="comments-${post.id}">
+                            ${comments.map(c => `
+                                <div class="comment-bubble">
+                                    <div class="comment-author">${escapeHtml(c.author || c.author_name || 'Member')}</div>
+                                    <div>${escapeHtml(c.text)}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div class="comment-input-box">
+                            <input
+                                type="text"
+                                id="comment-input-${post.id}"
+                                placeholder="Write a comment..."
+                                onkeydown="handleCommentKey(event, ${post.id})"
+                            >
+                            <button class="comment-send-btn" onclick="addComment(${post.id})">Send</button>
+                        </div>
+                    </div>
+                `;
+                postsFeedContainer.appendChild(postEl);
+            });
+        }
+
+        window.toggleLike = async (postId) => {
+            try {
+                const res = await fetch(`/api/posts/${postId}/like`, { method: "POST", headers: getAuthHeaders() });
+                if (res.ok) loadPosts();
+            } catch (err) { console.error("Like error", err); }
+        };
+
+        window.focusCommentInput = (postId) => {
+            const input = document.getElementById(`comment-input-${postId}`);
+            if (input) input.focus();
+        };
+
+        window.addComment = async (postId) => {
+            const input = document.getElementById(`comment-input-${postId}`);
+            if (!input || !input.value.trim()) return;
+
+            try {
+                const res = await fetch(`/api/posts/${postId}/comment`, {
+                    method: "POST",
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({ text: input.value.trim() })
+                });
+                if (res.ok) {
+                    input.value = "";
+                    loadPosts();
+                }
+            } catch (err) { console.error(err); }
+        };
+
+        window.handleCommentKey = (event, postId) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                addComment(postId);
+            }
+        };
+
+        window.deletePost = async (postId) => {
+            if (confirm("Gusto mo bang i-delete ang post na ito?")) {
+                try {
+                    const res = await fetch(`/api/posts/${postId}`, { method: "DELETE", headers: getAuthHeaders() });
+                    if (res.ok) loadPosts();
+                } catch (err) { alert("Error deleting post"); }
+            }
+        };
+
+        // Quick share game victory to feed
+        window.shareGameWinToFeed = async (gameName, amount) => {
+            const content = `🎉 Nanalo ako ng ${amount} Virtual Coins sa ${gameName}! Halika at subukan sa Arcade Zone! 🎰`;
+            try {
+                const res = await fetch("/api/posts", {
+                    method: "POST",
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({ content, mood: "🎰 Playing Arcade" })
+                });
+                if (res.ok) {
+                    alert("Na-share na ang iyong panalo sa Newsfeed! 🚀");
+                    switchView("feed");
+                }
+            } catch (e) { alert("Nai-share sa local session!"); }
+        };
+
+        /* ================= GAME 1: LUCKY WHEEL ================= */
+        const wheelSlices = [
+            { text: "+100", color: "#3b82f6" },
+            { text: "Try Again", color: "#64748b" },
+            { text: "+250", color: "#10b981" },
+            { text: "+50", color: "#f59e0b" },
+            { text: "Zero", color: "#94a3b8" },
+            { text: "+500", color: "#8b5cf6" },
+            { text: "+150", color: "#ec4899" },
+            { text: "JACKPOT 1k!", color: "#e11d48" }
+        ];
+
+        function drawWheel() {
+            const canvas = document.getElementById("wheelCanvas");
+            if (!canvas) return;
+            const ctx = canvas.getContext("2d");
+            const numSlices = wheelSlices.length;
+            const arc = (2 * Math.PI) / numSlices;
+            const radius = canvas.width / 2;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            wheelSlices.forEach((slice, i) => {
+                const angle = i * arc;
+                ctx.beginPath();
+                ctx.fillStyle = slice.color;
+                ctx.moveTo(radius, radius);
+                ctx.arc(radius, radius, radius, angle, angle + arc);
+                ctx.lineTo(radius, radius);
+                ctx.fill();
+
+                // Text
+                ctx.save();
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "bold 13px -apple-system, sans-serif";
+                ctx.translate(radius, radius);
+                ctx.rotate(angle + arc / 2);
+                ctx.textAlign = "right";
+                ctx.fillText(slice.text, radius - 15, 5);
+                ctx.restore();
+            });
+        }
+
+        const tabBtnWheel = document.getElementById("tabBtnWheel");
+        const tabBtnDice = document.getElementById("tabBtnDice");
+        const tabBtnCoin = document.getElementById("tabBtnCoin");
+        const gameBoxWheel = document.getElementById("gameBoxWheel");
+        const gameBoxDice = document.getElementById("gameBoxDice");
+        const gameBoxCoin = document.getElementById("gameBoxCoin");
+
+        tabBtnWheel.onclick = () => switchSubGame("wheel");
+        tabBtnDice.onclick = () => switchSubGame("dice");
+        tabBtnCoin.onclick = () => switchSubGame("coin");
+
+        function switchSubGame(game) {
+            tabBtnWheel.classList.remove("active");
+            tabBtnDice.classList.remove("active");
+            tabBtnCoin.classList.remove("active");
+            gameBoxWheel.classList.add("hidden");
+            gameBoxDice.classList.add("hidden");
+            gameBoxCoin.classList.add("hidden");
+
+            if (game === "dice") {
+                tabBtnDice.classList.add("active");
+                gameBoxDice.classList.remove("hidden");
+            } else if (game === "coin") {
+                tabBtnCoin.classList.add("active");
+                gameBoxCoin.classList.remove("hidden");
+            } else {
+                tabBtnWheel.classList.add("active");
+                gameBoxWheel.classList.remove("hidden");
+                drawWheel();
+            }
+        }
+
+        document.getElementById("spinWheelBtn").onclick = async () => {
+            if (isWheelSpinning) return;
+            const spinBtn = document.getElementById("spinWheelBtn");
+            const resultBanner = document.getElementById("wheelResultBanner");
+            resultBanner.style.display = "none";
+
+            try {
+                isWheelSpinning = true;
+                spinBtn.disabled = true;
+
+                let data = null;
+                try {
+                    const res = await fetch("/api/game/wheel", { method: "POST", headers: getAuthHeaders() });
+                    data = await res.json();
+                } catch (e) {
+                    // Fallback
+                    const idx = Math.floor(Math.random() * wheelSlices.length);
+                    const prizes = [100, 0, 250, 50, 0, 500, 150, 1000];
+                    const prize = prizes[idx];
+                    const newC = (currentUser.coins || 1000) - 50 + prize;
+                    data = { sliceIndex: idx, prize: prize, won: prize > 0, coins: newC };
+                }
+
+                if (data.error) {
+                    alert(data.error);
+                    isWheelSpinning = false;
+                    spinBtn.disabled = false;
+                    return;
+                }
+
+                // Calculate spin angles (top pointer is at -90 deg / 270 deg)
+                const arcDegree = 360 / wheelSlices.length;
+                const targetDegree = 360 - (data.sliceIndex * arcDegree) - (arcDegree / 2) + 270;
+                wheelRotation += 1800 + (targetDegree % 360);
+
+                const canvas = document.getElementById("wheelCanvas");
+                canvas.style.transform = `rotate(${wheelRotation}deg)`;
+
+                setTimeout(() => {
+                    isWheelSpinning = false;
+                    spinBtn.disabled = false;
+                    updateWalletUI(data.coins);
+
+                    resultBanner.style.display = "block";
+                    if (data.won) {
+                        resultBanner.className = "game-result-banner result-win";
+                        resultBanner.innerHTML = `
+                            🎉 Panalo! Nakuha mo ang <strong>+${data.prize} Virtual Coins</strong>!<br>
+                            <button class="share-win-btn" onclick="shareGameWinToFeed('Lucky Spin Wheel', ${data.prize})">📢 I-share sa Newsfeed</button>
+                        `;
+                    } else {
+                        resultBanner.className = "game-result-banner result-lose";
+                        resultBanner.textContent = "Bawi sa susunod na spin! Subukan ulit.";
+                    }
+                }, 4000);
+
+            } catch (err) {
+                isWheelSpinning = false;
+                spinBtn.disabled = false;
+            }
+        };
+
+        /* ================= GAME 2: DOUBLE DICE ================= */
+        const diceGlyphs = ["⚀", "⚁", "⚂", "⚃", "⚄", "⚅"];
+
+        window.selectDicePrediction = (pred) => {
+            currentDicePrediction = pred;
+            document.getElementById("predLow").classList.toggle("active", pred === 'low');
+            document.getElementById("predLucky7").classList.toggle("active", pred === 'lucky7');
+            document.getElementById("predHigh").classList.toggle("active", pred === 'high');
+        };
+
+        window.setDiceBet = (amount) => {
+            currentDiceBet = amount;
+            document.querySelectorAll("#gameBoxDice .bet-chip").forEach(c => {
+                c.classList.toggle("active", parseInt(c.textContent) === amount);
+            });
+        };
+
+        document.getElementById("rollDiceBtn").onclick = async () => {
+            const btn = document.getElementById("rollDiceBtn");
+            const resultBanner = document.getElementById("diceResultBanner");
+            const die1 = document.getElementById("dieBox1");
+            const die2 = document.getElementById("dieBox2");
+
+            resultBanner.style.display = "none";
+            btn.disabled = true;
+            die1.classList.add("rolling");
+            die2.classList.add("rolling");
+
+            try {
+                let data = null;
+                try {
+                    const res = await fetch("/api/game/dice", {
+                        method: "POST",
+                        headers: getAuthHeaders(),
+                        body: JSON.stringify({ bet: currentDiceBet, prediction: currentDicePrediction })
+                    });
+                    data = await res.json();
+                } catch (e) {
+                    // Fallback
+                    const d1 = Math.floor(Math.random() * 6) + 1;
+                    const d2 = Math.floor(Math.random() * 6) + 1;
+                    const tot = d1 + d2;
+                    let won = (currentDicePrediction === 'low' && tot <= 6) || (currentDicePrediction === 'lucky7' && tot === 7) || (currentDicePrediction === 'high' && tot >= 8);
+                    const payout = won ? (currentDicePrediction === 'lucky7' ? currentDiceBet * 4 : currentDiceBet * 2) : 0;
+                    const net = won ? payout - currentDiceBet : -currentDiceBet;
+                    data = { die1: d1, die2: d2, total: tot, won, payout, coins: (currentUser.coins || 1000) + net };
+                }
+
+                if (data.error) {
+                    alert(data.error);
+                    btn.disabled = false;
+                    die1.classList.remove("rolling");
+                    die2.classList.remove("rolling");
+                    return;
+                }
+
+                setTimeout(() => {
+                    btn.disabled = false;
+                    die1.classList.remove("rolling");
+                    die2.classList.remove("rolling");
+
+                    die1.textContent = diceGlyphs[data.die1 - 1];
+                    die2.textContent = diceGlyphs[data.die2 - 1];
+                    updateWalletUI(data.coins);
+
+                    resultBanner.style.display = "block";
+                    if (data.won) {
+                        resultBanner.className = "game-result-banner result-win";
+                        resultBanner.innerHTML = `
+                            🎉 Lumabas ang ${data.total}! Panalo ka ng <strong>+${data.payout} Virtual Coins</strong>!<br>
+                            <button class="share-win-btn" onclick="shareGameWinToFeed('Double Dice Duel', ${data.payout})">📢 I-share sa Newsfeed</button>
+                        `;
+                    } else {
+                        resultBanner.className = "game-result-banner result-lose";
+                        resultBanner.textContent = `Lumabas ang ${data.total}. Bawi sa susunod na roll! (-${currentDiceBet} coins)`;
+                    }
+                }, 800);
+
+            } catch (err) {
+                btn.disabled = false;
+                die1.classList.remove("rolling");
+                die2.classList.remove("rolling");
+            }
+        };
+
+        /* ================= GAME 3: COIN FLIP ================= */
+        window.selectCoinChoice = (choice) => {
+            currentCoinChoice = choice;
+            document.getElementById("choiceHeads").classList.toggle("active", choice === 'heads');
+            document.getElementById("choiceTails").classList.toggle("active", choice === 'tails');
+        };
+
+        window.setCoinBet = (amount) => {
+            currentCoinBet = amount;
+            document.querySelectorAll("#gameBoxCoin .bet-chip").forEach(c => {
+                c.classList.toggle("active", parseInt(c.textContent) === amount);
+            });
+        };
+
+        document.getElementById("flipCoinBtn").onclick = async () => {
+            const btn = document.getElementById("flipCoinBtn");
+            const resultBanner = document.getElementById("coinResultBanner");
+            const coin = document.getElementById("coinVisual");
+
+            resultBanner.style.display = "none";
+            btn.disabled = true;
+            coin.classList.add("flipping");
+
+            try {
+                let data = null;
+                try {
+                    const res = await fetch("/api/game/coinflip", {
+                        method: "POST",
+                        headers: getAuthHeaders(),
+                        body: JSON.stringify({ bet: currentCoinBet, choice: currentCoinChoice })
+                    });
+                    data = await res.json();
+                } catch (e) {
+                    const outcome = Math.random() < 0.5 ? 'heads' : 'tails';
+                    const won = outcome === currentCoinChoice;
+                    const payout = won ? currentCoinBet * 2 : 0;
+                    const net = won ? currentCoinBet : -currentCoinBet;
+                    data = { outcome, won, payout, coins: (currentUser.coins || 1000) + net };
+                }
+
+                if (data.error) {
+                    alert(data.error);
+                    btn.disabled = false;
+                    coin.classList.remove("flipping");
+                    return;
+                }
+
+                setTimeout(() => {
+                    btn.disabled = false;
+                    coin.classList.remove("flipping");
+                    coin.textContent = data.outcome === 'heads' ? '👑' : '🦅';
+                    updateWalletUI(data.coins);
+
+                    resultBanner.style.display = "block";
+                    if (data.won) {
+                        resultBanner.className = "game-result-banner result-win";
+                        resultBanner.innerHTML = `
+                            🎉 Lumabas ang ${data.outcome.toUpperCase()}! Nanalo ka ng <strong>+${data.payout} Virtual Coins</strong>!<br>
+                            <button class="share-win-btn" onclick="shareGameWinToFeed('Coin Flip', ${data.payout})">📢 I-share sa Newsfeed</button>
+                        `;
+                    } else {
+                        resultBanner.className = "game-result-banner result-lose";
+                        resultBanner.textContent = `Lumabas ang ${data.outcome.toUpperCase()}. Bawi sa susunod na flip! (-${currentCoinBet} coins)`;
+                    }
+                }, 1200);
+
+            } catch (err) {
+                btn.disabled = false;
+                coin.classList.remove("flipping");
+            }
+        };
+
+        /* ================= LEADERBOARD ================= */
+        async function loadLeaderboard() {
+            const tbody = document.getElementById("leaderboardBody");
+            try {
+                const res = await fetch("/api/game/leaderboard");
+                const data = await res.json();
+                const list = data.leaderboard || [];
+
+                tbody.innerHTML = list.map((user, idx) => {
+                    let medal = `#${idx + 1}`;
+                    if (idx === 0) medal = "🥇 1st";
+                    else if (idx === 1) medal = "🥈 2nd";
+                    else if (idx === 2) medal = "🥉 3rd";
+
+                    return `
+                        <tr>
+                            <td><strong class="rank-medal">${medal}</strong></td>
+                            <td><strong>${escapeHtml(user.first_name)} ${escapeHtml(user.last_name)}</strong></td>
+                            <td style="color:#b45309; font-weight:800;">🪙 ${Number(user.coins || 0).toLocaleString()}</td>
+                        </tr>
+                    `;
+                }).join("");
+            } catch (err) {
+                tbody.innerHTML = `
+                    <tr><td>🥇 1st</td><td>Sarah Dela Cruz</td><td style="color:#b45309; font-weight:bold;">🪙 4,250</td></tr>
+                    <tr><td>🥈 2nd</td><td>Emman (You)</td><td style="color:#b45309; font-weight:bold;">🪙 ${Number(currentUser ? currentUser.coins : 1000).toLocaleString()}</td></tr>
+                    <tr><td>🥉 3rd</td><td>Mark Anthony</td><td style="color:#b45309; font-weight:bold;">🪙 1,800</td></tr>
+                `;
+            }
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement("div");
+            div.innerText = str || "";
+            return div.innerHTML;
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return "Recently";
+            try {
+                const date = new Date(dateStr);
+                return date.toLocaleDateString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            } catch (e) { return "Recently"; }
+        }
+
+        // Initialize on page load
+        checkStatus();
+        checkSession();
+    </script>
+
+</body>
+</html>
