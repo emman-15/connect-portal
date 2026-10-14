@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="appGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1877f2" />
+      <stop offset="100%" stop-color="#0d47a1" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#appGrad)" />
+  <circle cx="256" cy="256" r="160" fill="none" stroke="#ffffff" stroke-width="36" stroke-linecap="round" stroke-dasharray="750 250" />
+  <circle cx="370" cy="140" r="28" fill="#fbbf24" />
+  <text x="256" y="320" font-family="-apple-system, BlinkMacSystemFont, Arial, sans-serif" font-size="200" font-weight="900" fill="#ffffff" text-anchor="middle">C</text>
+</svg>
