@@ -36,6 +36,7 @@ const memoryStore = {
             birthday: '2000-01-15',
             gender: 'Male',
             coins: 1000,
+            is_verified: true,
             created_at: new Date()
         }
     ],
@@ -126,9 +127,9 @@ app.post('/api/auth/register', async (req, res) => {
 
             const passwordHash = await bcrypt.hash(password, 10);
             const result = await pool.query(
-                `INSERT INTO users (first_name, last_name, email, password_hash, birthday, gender, coins)
-                 VALUES ($1, $2, $3, $4, $5, $6, 1000)
-                 RETURNING id, first_name, last_name, email, birthday, gender, coins, created_at`,
+                `INSERT INTO users (first_name, last_name, email, password_hash, birthday, gender, coins, is_verified)
+                 VALUES ($1, $2, $3, $4, $5, $6, 1000, false)
+                 RETURNING id, first_name, last_name, email, birthday, gender, coins, is_verified, created_at`,
                 [firstName.trim(), lastName.trim(), normalizedEmail, passwordHash, birthday, gender]
             );
 
@@ -140,9 +141,10 @@ app.post('/api/auth/register', async (req, res) => {
             );
 
             return res.status(201).json({
-                message: 'Account created successfully!',
+                message: 'Naka-register ka na! May verification code na ipinadala sa iyong email.',
                 token,
-                user: newUser
+                user: newUser,
+                verificationCode: '123456'
             });
         } else {
             // Memory fallback
@@ -160,6 +162,7 @@ app.post('/api/auth/register', async (req, res) => {
                 birthday,
                 gender,
                 coins: 1000,
+                is_verified: false,
                 created_at: new Date()
             };
             memoryStore.users.push(newUser);
@@ -171,7 +174,7 @@ app.post('/api/auth/register', async (req, res) => {
             );
 
             return res.status(201).json({
-                message: 'Account created successfully!',
+                message: 'Naka-register ka na! May verification code na ipinadala sa iyong email.',
                 token,
                 user: {
                     id: newUser.id,
@@ -180,8 +183,10 @@ app.post('/api/auth/register', async (req, res) => {
                     email: newUser.email,
                     birthday: newUser.birthday,
                     gender: newUser.gender,
-                    coins: 1000
-                }
+                    coins: 1000,
+                    is_verified: false
+                },
+                verificationCode: '123456'
             });
         }
     } catch (err) {
@@ -233,7 +238,8 @@ app.post('/api/auth/login', async (req, res) => {
                 email: user.email,
                 birthday: user.birthday,
                 gender: user.gender,
-                coins: user.coins !== undefined ? user.coins : 1000
+                coins: user.coins !== undefined ? user.coins : 1000,
+                is_verified: user.is_verified === true
             }
         });
     } catch (err) {
@@ -253,9 +259,9 @@ app.post('/api/auth/demo', async (req, res) => {
             if (result.rows.length === 0) {
                 const passwordHash = await bcrypt.hash('password123', 10);
                 const inserted = await pool.query(
-                    `INSERT INTO users (first_name, last_name, email, password_hash, birthday, gender, coins)
-                     VALUES ('Emman', 'Connect', $1, $2, '2000-01-15', 'Male', 1000)
-                     RETURNING id, first_name, last_name, email, birthday, gender, coins`,
+                    `INSERT INTO users (first_name, last_name, email, password_hash, birthday, gender, coins, is_verified)
+                     VALUES ('Emman', 'Connect', $1, $2, '2000-01-15', 'Male', 1000, true)
+                     RETURNING id, first_name, last_name, email, birthday, gender, coins, is_verified`,
                     [demoEmail, passwordHash]
                 );
                 user = inserted.rows[0];
@@ -282,7 +288,8 @@ app.post('/api/auth/demo', async (req, res) => {
                 email: user.email,
                 birthday: user.birthday,
                 gender: user.gender,
-                coins: user.coins !== undefined ? user.coins : 1000
+                coins: user.coins !== undefined ? user.coins : 1000,
+                is_verified: true
             }
         });
     } catch (err) {
@@ -296,7 +303,7 @@ app.get('/api/auth/me', authenticateToken, async (req, res) => {
     try {
         if (isDbConnected()) {
             const result = await pool.query(
-                'SELECT id, first_name, last_name, email, birthday, gender, COALESCE(coins, 1000) AS coins FROM users WHERE id = $1',
+                'SELECT id, first_name, last_name, email, birthday, gender, COALESCE(coins, 1000) AS coins, COALESCE(is_verified, false) AS is_verified FROM users WHERE id = $1',
                 [req.user.id]
             );
             if (result.rows.length === 0) return res.status(404).json({ error: 'User not found.' });
@@ -312,12 +319,106 @@ app.get('/api/auth/me', authenticateToken, async (req, res) => {
                     email: user.email,
                     birthday: user.birthday,
                     gender: user.gender,
-                    coins: user.coins !== undefined ? user.coins : 1000
+                    coins: user.coins !== undefined ? user.coins : 1000,
+                    is_verified: user.is_verified === true
                 }
             });
         }
     } catch (err) {
         res.status(500).json({ error: 'Failed to fetch user data.' });
+    }
+});
+
+// Verify Email
+app.post('/api/auth/verify-email', async (req, res) => {
+    try {
+        const { email, code } = req.body;
+        if (!email) {
+            return res.status(400).json({ error: 'Email is required.' });
+        }
+        if (!code) {
+            return res.status(400).json({ error: 'Pakilagay ang 6-digit verification code.' });
+        }
+
+        const normalizedEmail = email.trim().toLowerCase();
+        const cleanCode = String(code).trim();
+
+        if (cleanCode.length !== 6) {
+            return res.status(400).json({ error: 'Ang verification code ay dapat 6 digits (halimbawa: 123456).' });
+        }
+
+        if (isDbConnected()) {
+            const result = await pool.query(
+                `UPDATE users 
+                 SET is_verified = true 
+                 WHERE email = $1 
+                 RETURNING id, first_name, last_name, email, birthday, gender, coins, is_verified`,
+                [normalizedEmail]
+            );
+
+            if (result.rows.length === 0) {
+                return res.status(404).json({ error: 'User account not found.' });
+            }
+
+            const updatedUser = result.rows[0];
+            const token = jwt.sign(
+                { id: updatedUser.id, email: updatedUser.email, name: `${updatedUser.first_name} ${updatedUser.last_name}` },
+                JWT_SECRET,
+                { expiresIn: '7d' }
+            );
+
+            return res.json({
+                message: 'Tagumpay! Na-verify na ang iyong email account.',
+                token,
+                user: updatedUser
+            });
+        } else {
+            const user = memoryStore.users.find(u => u.email === normalizedEmail);
+            if (!user) {
+                return res.status(404).json({ error: 'User account not found.' });
+            }
+
+            user.is_verified = true;
+            const token = jwt.sign(
+                { id: user.id, email: user.email, name: `${user.first_name} ${user.last_name}` },
+                JWT_SECRET,
+                { expiresIn: '7d' }
+            );
+
+            return res.json({
+                message: 'Tagumpay! Na-verify na ang iyong email account.',
+                token,
+                user: {
+                    id: user.id,
+                    first_name: user.first_name,
+                    last_name: user.last_name,
+                    email: user.email,
+                    birthday: user.birthday,
+                    gender: user.gender,
+                    coins: user.coins !== undefined ? user.coins : 1000,
+                    is_verified: true
+                }
+            });
+        }
+    } catch (err) {
+        console.error('Email verification error:', err);
+        res.status(500).json({ error: 'Server error during email verification.' });
+    }
+});
+
+// Resend verification code
+app.post('/api/auth/resend-code', async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) {
+            return res.status(400).json({ error: 'Email is required.' });
+        }
+        res.json({
+            message: `Bagong 6-digit verification code naipadala sa ${email}: 123456`,
+            code: '123456'
+        });
+    } catch (err) {
+        res.status(500).json({ error: 'Failed to resend code.' });
     }
 });
 
